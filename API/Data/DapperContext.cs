@@ -8,7 +8,7 @@ namespace API.Data
         private readonly string _connectionString = string.Empty;
         public DapperContext()
         {
-            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+            var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection");
             if (connectionString is not null)
             {
                 _connectionString = connectionString;

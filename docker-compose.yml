@@ -12,7 +12,7 @@ services:
       - 80:80
 
   db:
-    image: postgres:16-bullseye
+    image: postgres:16
     env_file:
       - .env
     ports:
