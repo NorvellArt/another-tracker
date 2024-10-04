@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import appLogo from '/favicon.svg'
+import PWABadge from './PWABadge.tsx'
 import './App.css'
 
 function App() {
@@ -26,13 +27,13 @@ function App() {
     <>
       <div>
         <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+          <img src={appLogo} className="logo" alt="mclient logo" />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>mclient</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
@@ -47,6 +48,7 @@ function App() {
       <div>
         { users.map((user: any) => { return <div>{user.email}</div> }) }
       </div>
+      <PWABadge />
     </>
   )
 }
