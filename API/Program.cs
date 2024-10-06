@@ -34,7 +34,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
-app.UseCors(builder => builder.AllowAnyOrigin()
+app.UseCors(builder => builder.WithOrigins("http://localhost:5173/", "http://45.140.169.11:8888/")
                                .AllowAnyMethod()
                                .AllowAnyHeader());
 app.UseAuthentication();
