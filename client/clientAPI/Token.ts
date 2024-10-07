@@ -1,6 +1,6 @@
 const ACCESS_TOKEN_KEY = "access_token";
 
-class AuthClientStore {
+export class AuthClientStore {
     static getAccessToken() {
         return localStorage.getItem(ACCESS_TOKEN_KEY);
     }
@@ -13,5 +13,3 @@ class AuthClientStore {
         localStorage.removeItem(ACCESS_TOKEN_KEY);
     }
 }
-
-export default AuthClientStore;

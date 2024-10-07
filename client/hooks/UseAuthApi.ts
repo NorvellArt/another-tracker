@@ -1,4 +1,4 @@
-import AuthClientStore from "../clientAPI/token";
+import { AuthClientStore } from "../clientAPI/token";
 import { ApiMethod } from "../types/api";
 import { User } from "../types/user";
 import { useApi } from "./UseApi";
