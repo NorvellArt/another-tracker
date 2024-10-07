@@ -1,16 +1,32 @@
 import PWABadge from "./PWABadge.tsx";
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import Login from "./pages/Login.tsx";
+import { AuthContext } from "../provider/AuthProvider.tsx";
+import React, { useEffect, useState } from "react";
 
 function App() {
+    const { isAuthenticated, currentUser } = React.useContext(AuthContext);
+    const [appIsLoading, setAppIsLoading] = useState(true);
+
+    useEffect(() => {
+        currentUser()
+            .catch(() => {})
+            .finally(() => setAppIsLoading(false));
+    }, []);
+
+    if (appIsLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!isAuthenticated) {
+        return <Login />;
+    }
+
     return (
         <>
             <BrowserRouter>
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    {/* <Route path="/signup" element={<Signup />} /> */}
-                </Routes>
+                <div>Yoyoyoyoyoyoyoy</div>
             </BrowserRouter>
             <PWABadge />
         </>

@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
+import React from "react";
 
 const Login = () => {
+    const { login } = React.useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -13,17 +16,7 @@ const Login = () => {
     };
 
     const onLoginClick = async () => {
-        const response = await fetch("http://45.140.169.11:80/api/auth/login", {
-            method: "POST",
-            body: JSON.stringify({ email, password }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include"
-        });
-
-        const token = await response.json();
-        console.log(token);
+        await login(email, password)
 
         setEmail('');
         setPassword('');
