@@ -1,4 +1,4 @@
-import { AuthClientStore } from "../clientAPI/token";
+import { AuthClientStore } from "../clientAPI/Token";
 import { ApiMethod } from '../types/api';
 
 const apiUrl = "http://45.140.169.11:8888/";
