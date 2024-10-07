@@ -1,5 +1,6 @@
 import AuthClientStore from "../clientAPI/token";
 import { ApiMethod } from "../types/api";
+import { User } from "../types/user";
 import { useApi } from "./UseApi";
 
 let debouncedPromise: Promise<unknown> | null = null;
@@ -63,7 +64,7 @@ export const useAuthApi = () => {
     ) => {
         try {
             return await sendProtectedRequest(method, path, body, init);
-        } catch (e) {
+        } catch (e: any) {
             if (e?.status === 401) {
                 try {
                     await refreshTokens();
