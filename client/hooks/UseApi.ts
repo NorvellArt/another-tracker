@@ -1,7 +1,7 @@
 import { AuthClientStore } from "../clientAPI/Token";
 import { ApiMethod } from "../types/api";
 
-const apiUrl = "http://45.140.169.11:80/";
+const apiUrl = "http://api:80/";
 
 const sendRequest = (
     method: ApiMethod,
