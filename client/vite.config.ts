@@ -18,6 +18,7 @@ export default defineConfig({
       short_name: 'mclient',
       description: 'mclient',
       theme_color: '#ffffff',
+      start_url: 'http://45.140.169.11:8888/home'
     },
 
     workbox: {

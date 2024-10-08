@@ -1,5 +1,6 @@
 ﻿using API.Data.RepositoryContracts;
 using API.Domain.Token;
+using API.Domain.User;
 using API.Dto.User;
 using API.Services.ServiceContracts;
 using Microsoft.AspNetCore.Authorization;
@@ -73,7 +74,7 @@ namespace API.Controllers
             await _refreshTokenRepository.Delete(refreshToken);
             DeleteTokenCookie();
 
-            return Ok();
+            return Ok(true);
         }
 
         [AllowAnonymous]
@@ -91,6 +92,15 @@ namespace API.Controllers
             SetTokenCookie(tokens.RefreshToken);
 
             return Ok(tokens);
+        }
+
+        [Authorize]
+        [HttpGet("currentUser")]
+        public async Task<IActionResult> CurrentUser()
+        {
+            var userId = User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value;
+            var user = await _userRepository.GetUserById(userId);
+            return Ok(user);
         }
 
         private string GetUserAgent()

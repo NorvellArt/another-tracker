@@ -12,15 +12,20 @@ export const useAuthApi = () => {
     const { sendRequest, sendProtectedRequest } = useApi();
 
     const login = async (email: string, password: string) => {
-        const response = await sendRequest(ApiMethod.POST, 'api/auth/login', { email, password });
+        const response = await sendRequest(
+            ApiMethod.POST,
+            "api/auth/login",
+            { email, password },
+            undefined,
+            { credentials: "include" }
+        );
 
         AuthClientStore.setAccessToken(response.token);
-
         return response;
     };
 
     const logout = async () => {
-        await sendRequest(ApiMethod.GET, 'api/auth/logout');
+        await sendProtectedRequest(ApiMethod.GET, "api/auth/logout", undefined, { credentials: "include" });
 
         AuthClientStore.removeAccessToken();
     };
@@ -37,14 +42,14 @@ export const useAuthApi = () => {
         timeout = setTimeout(() => {
             const executeLogic = async () => {
                 const response = await sendRequest(
-                    ApiMethod.POST,
-                    'api/auth/refresh-tokens',
+                    ApiMethod.GET,
+                    "api/auth/refresh-tokens",
                     undefined,
                     undefined,
                     { credentials: "include" } // Required update
                 );
 
-                AuthClientStore.setAccessToken(response.access_token);
+                AuthClientStore.setAccessToken(response.token);
             };
 
             executeLogic().then(debouncedResolve).catch(debouncedReject);
@@ -79,11 +84,11 @@ export const useAuthApi = () => {
         }
     };
 
-    const currentUser = (userIsNotAuthenticatedCallback: () => void) => {
-        return sendAuthGuardedRequest(
+    const currentUser = async (userIsNotAuthenticatedCallback: () => void) => {
+        return await sendAuthGuardedRequest(
             userIsNotAuthenticatedCallback,
             ApiMethod.GET,
-            "api/auth/refresh-tokens"
+            "api/auth/currentUser"
         ) as Promise<User>;
     };
 

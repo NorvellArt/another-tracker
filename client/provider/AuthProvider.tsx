@@ -3,10 +3,11 @@ import { useAuthApi } from "../hooks/UseAuthApi";
 import { ApiMethod } from "../types/api";
 import { ReactNode, useState } from "react";
 import { User } from "../types/user";
+import { useNavigate } from "react-router-dom";
 
 type ContextType = {
     isAuthenticated: boolean;
-    login(email: string, password: string): Promise<void>;
+    login(email: string, password: string): Promise<any>;
     logout(): void;
     currentUser(): Promise<User>;
     sendAuthGuardedRequest(
@@ -22,6 +23,7 @@ export const AuthContext = React.createContext({} as ContextType);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
     const {
         login: authLogin,
         logout: authLogout,
@@ -31,25 +33,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async (email: string, password: string) => {
         try {
-            await authLogin(email, password);
+            const token = await authLogin(email, password);
+            
             setIsAuthenticated(true);
+            return token;
         } catch (e) {
             setIsAuthenticated(false);
             throw e;
         }
     };
 
-    const logout = () => {
-        authLogout();
+    const logout = async () => {
+        await authLogout();
         setIsAuthenticated(false);
     };
 
     const currentUser = async () => {
         const user = await authCurrentUser(() => {
-            setIsAuthenticated(false);
+            setIsAuthenticated(() => false);
         });
         setIsAuthenticated(true);
-
+        navigate('/home');
         return user;
     };
 

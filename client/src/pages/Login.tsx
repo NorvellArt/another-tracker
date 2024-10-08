@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const { login } = React.useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const onChangeEmail = (event: React.FormEvent<HTMLInputElement>) => {
         setEmail(event.currentTarget.value);
@@ -16,22 +18,27 @@ const Login = () => {
     };
 
     const onLoginClick = async () => {
-        await login(email, password)
+        const token = await login(email, password);
 
-        setEmail('');
-        setPassword('');
+        console.log('token', token)
+        if (token) {
+            navigate('/home');
+
+            setEmail("");
+            setPassword("");
+        }
     };
 
     return (
         <>
             <div className="email">
                 <span>Email </span>
-                <input onChange={onChangeEmail} />
+                <input value={email} onChange={onChangeEmail} />
             </div>
 
             <div className="password">
                 <span>Password </span>
-                <input onChange={onChangePassword} />
+                <input value={password} onChange={onChangePassword} />
             </div>
 
             <button onClick={onLoginClick}>Login</button>

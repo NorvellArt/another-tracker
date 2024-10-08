@@ -36,6 +36,17 @@ namespace API.Data.RepositoryManager
             return await connection.QueryFirstOrDefaultAsync<User>(sql, new { _email = email });
         }
 
+        public async Task<User?> GetUserById(string id)
+        {
+            string sql = $@"SELECT u.""id"" as Id,
+                                   u.""email"" as Email,
+                                   u.""password_hash"" as PasswordHash,
+                                   u.""password_salt"" as PasswordSalt
+                            FROM public.""users"" u WHERE id=@_id::integer";
+            var connection = _dapperContext.GetConnection();
+            return await connection.QueryFirstOrDefaultAsync<User>(sql, new { _id = id });
+        }
+
         //public async Task<int> UpdateUser(User user)
         //{
         //    string sql = $@"UPDATE public.""users"" u
