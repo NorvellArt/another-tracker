@@ -29,9 +29,9 @@ services:
       context: .
       args:
         - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+    container_name: another_tracker_nginx
     env_file:
       - .env-prod
-    container_name: another_tracker_nginx
     ports:
       - "8888:8888"
     depends_on:
