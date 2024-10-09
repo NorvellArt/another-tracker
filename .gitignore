@@ -2,6 +2,7 @@
 .vscode
 
 .env
+.env-prod
 
 node_modules
 dist

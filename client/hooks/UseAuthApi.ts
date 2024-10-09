@@ -6,7 +6,7 @@ import { useApi } from "./UseApi";
 let debouncedPromise: Promise<unknown> | null = null;
 let debouncedResolve: (...args: unknown[]) => void;
 let debouncedReject: (...args: unknown[]) => void;
-let timeout: number;
+let timeout: NodeJS.Timeout;
 
 export const useAuthApi = () => {
     const { sendRequest, sendProtectedRequest } = useApi();
@@ -14,7 +14,7 @@ export const useAuthApi = () => {
     const login = async (email: string, password: string) => {
         const response = await sendRequest(
             ApiMethod.POST,
-            "api/auth/login",
+            "/auth/login",
             { email, password },
             undefined,
             { credentials: "include" }
@@ -25,7 +25,7 @@ export const useAuthApi = () => {
     };
 
     const logout = async () => {
-        await sendProtectedRequest(ApiMethod.GET, "api/auth/logout", undefined, { credentials: "include" });
+        await sendProtectedRequest(ApiMethod.GET, "/auth/logout", undefined, { credentials: "include" });
 
         AuthClientStore.removeAccessToken();
     };
@@ -43,7 +43,7 @@ export const useAuthApi = () => {
             const executeLogic = async () => {
                 const response = await sendRequest(
                     ApiMethod.GET,
-                    "api/auth/refresh-tokens",
+                    "/auth/refresh-tokens",
                     undefined,
                     undefined,
                     { credentials: "include" } // Required update
@@ -88,7 +88,7 @@ export const useAuthApi = () => {
         return await sendAuthGuardedRequest(
             userIsNotAuthenticatedCallback,
             ApiMethod.GET,
-            "api/auth/currentUser"
+            "/auth/currentUser"
         ) as Promise<User>;
     };
 
