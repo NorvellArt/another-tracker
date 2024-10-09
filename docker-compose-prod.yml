@@ -5,7 +5,7 @@ services:
   api:
     image: api
     env_file:
-      - .env-prod
+      - ./prod.env
     container_name: another_tracker_api
     build: ./API
     ports:
@@ -14,7 +14,7 @@ services:
   db:
     image: postgres:16
     env_file:
-      - .env-prod
+      - ./prod.env
     ports:
       - "5430:5432"
     expose:
@@ -31,7 +31,7 @@ services:
         - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     container_name: another_tracker_nginx
     env_file:
-      - .env-prod
+      - ./prod.env
     ports:
       - "8888:8888"
     depends_on:
