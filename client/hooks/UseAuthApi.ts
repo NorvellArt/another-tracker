@@ -6,7 +6,7 @@ import { useApi } from "./UseApi";
 let debouncedPromise: Promise<unknown> | null = null;
 let debouncedResolve: (...args: unknown[]) => void;
 let debouncedReject: (...args: unknown[]) => void;
-let timeout: NodeJS.Timeout;
+let timeout: number;
 
 export const useAuthApi = () => {
     const { sendRequest, sendProtectedRequest } = useApi();
@@ -39,7 +39,7 @@ export const useAuthApi = () => {
             });
         }
 
-        timeout = setTimeout(() => {
+        timeout = window.setTimeout(() => {
             const executeLogic = async () => {
                 const response = await sendRequest(
                     ApiMethod.GET,
