@@ -27,7 +27,13 @@ namespace API.Services
 
         public async Task<User?> Register(UserCredentialsDto userCredentials)
         {
-            return await _authRepository.Register(userCredentials);
+            CreatePasswordHash(userCredentials.password, out byte[] passwordHash, out byte[] passwordSalt);
+            var user = new User();
+            user.Email = userCredentials.email;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            
+            return await _authRepository.Register(user);
         }
 
         public async Task<TokensModel?> Login(UserCredentialsDto userCredentials, string userAgent)
@@ -59,7 +65,7 @@ namespace API.Services
 
         private static bool IsValidPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            using var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt);
+            using var hmac = new HMACSHA512(passwordSalt);
             var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             for (int i = 0; i < computedHash.Length; i++)
             {
@@ -115,6 +121,13 @@ namespace API.Services
             token.Expires = DateTime.UtcNow.AddDays(7);
 
             return await _refreshTokenRepository.Update(token);
+        }
+
+        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        {
+            using var hmac = new HMACSHA512();
+            passwordSalt = hmac.Key;
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
     }
 }
