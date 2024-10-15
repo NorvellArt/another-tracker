@@ -1,5 +1,5 @@
-import { AuthClientStore } from "../clientAPI/Token";
-import { ApiMethod } from "../types/api";
+import { AuthClientStore } from "@/clientAPI/Token";
+import { ApiMethod } from "@/types/api";
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 

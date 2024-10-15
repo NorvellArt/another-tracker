@@ -1,9 +1,9 @@
-import React from "react";
-import { useAuthApi } from "../hooks/UseAuthApi";
-import { ApiMethod } from "../types/api";
-import { ReactNode, useState } from "react";
-import { User } from "../types/user";
+import React, { ReactNode, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { useAuthApi } from "@/hooks/UseAuthApi";
+import { ApiMethod } from "@/types/api";
+import { User } from "@/types/user";
 
 type ContextType = {
     isAuthenticated: boolean;
@@ -33,10 +33,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async (email: string, password: string) => {
         try {
-            const token = await authLogin(email, password);
+            await authLogin(email, password);
             
             setIsAuthenticated(true);
-            return token;
+            navigate('/');
         } catch (e) {
             setIsAuthenticated(false);
             throw e;
@@ -50,10 +50,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const currentUser = async () => {
         const user = await authCurrentUser(() => {
-            setIsAuthenticated(() => false);
+            setIsAuthenticated(false);
         });
         setIsAuthenticated(true);
-        navigate('/home');
         return user;
     };
 

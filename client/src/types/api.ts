@@ -1,4 +1,4 @@
-import { ValueOf } from '../utils/ValueOf';
+import { ValueOf } from '@/utils/ValueOf';
 
 export const ApiMethod = {
     GET: 'GET',

@@ -1,7 +1,7 @@
-import { AuthClientStore } from "../clientAPI/Token";
-import { ApiMethod } from "../types/api";
-import { User } from "../types/user";
-import { useApi } from "./UseApi";
+import { AuthClientStore } from "@/clientAPI/Token";
+import { ApiMethod } from "@/types/api";
+import { User } from "@/types/user";
+import { useApi } from "@/hooks/UseApi";
 
 let debouncedPromise: Promise<unknown> | null = null;
 let debouncedResolve: (...args: unknown[]) => void;

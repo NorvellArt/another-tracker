@@ -1,13 +1,11 @@
-import { useState } from "react";
-import { AuthContext } from "../../provider/AuthProvider";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
-const Login = () => {
+import { AuthContext } from "@/provider/AuthProvider";
+
+const Login: React.FC = () => {
     const { login } = React.useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
 
     const onChangeEmail = (event: React.FormEvent<HTMLInputElement>) => {
         setEmail(event.currentTarget.value);
@@ -18,15 +16,7 @@ const Login = () => {
     };
 
     const onLoginClick = async () => {
-        const token = await login(email, password);
-
-        console.log('token', token)
-        if (token) {
-            navigate('/home');
-
-            setEmail("");
-            setPassword("");
-        }
+        await login(email, password);
     };
 
     return (
