@@ -1,9 +1,9 @@
 import PWABadge from "@/PWABadge.tsx";
 import { Route, Routes } from "react-router-dom";
-import Login from "@/pages/Login.tsx";
+import Login from "@/pages/Credentials/Login";
 import { AuthContext } from "@/provider/AuthProvider.tsx";
 import React, { useEffect } from "react";
-import Home from "@/pages/Home.tsx";
+import Home from "@/pages/Credentials/Home";
 import PublicLayout from "@/layout/PublicLayout.tsx";
 import ProtectedLayout from "@/layout/ProtectedLayout.tsx";
 import Profile from "@/pages/Profile.tsx";
