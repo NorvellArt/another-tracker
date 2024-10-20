@@ -1,13 +1,14 @@
-import PWABadge from "@/PWABadge.tsx";
-import { Route, Routes } from "react-router-dom";
-import Login from "@/pages/Credentials/Login";
-import { AuthContext } from "@/provider/AuthProvider.tsx";
-import React, { useEffect } from "react";
-import Home from "@/pages/Credentials/Home";
-import PublicLayout from "@/layout/PublicLayout.tsx";
-import ProtectedLayout from "@/layout/ProtectedLayout.tsx";
-import Profile from "@/pages/Profile.tsx";
-import Settings from "@/pages/Settings.tsx";
+import React, { useEffect } from 'react';
+import PWABadge from '@/PWABadge.tsx';
+import { Route, Routes } from 'react-router-dom';
+import Login from '@/pages/Credentials/Login';
+import { AuthContext } from '@/provider/AuthProvider.tsx';
+import Start from '@/pages/Credentials/Start';
+import PublicLayout from '@/layout/PublicLayout.tsx';
+import ProtectedLayout from '@/layout/ProtectedLayout.tsx';
+import Profile from '@/pages/Profile.tsx';
+import Settings from '@/pages/Settings.tsx';
+import SignUp from './pages/Credentials/SignUp';
 
 function App() {
     const { currentUser } = React.useContext(AuthContext);
@@ -20,13 +21,14 @@ function App() {
         <>
             <Routes>
                 <Route element={<PublicLayout />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
+                    <Route path='/' element={<Start />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/signup' element={<SignUp />} />
                 </Route>
 
-                <Route path="/dashboard" element={<ProtectedLayout />}>
-                    <Route path="profile" element={<Profile />} />
-                    <Route path="settings" element={<Settings />} />
+                <Route path='/dashboard' element={<ProtectedLayout />}>
+                    <Route path='profile' element={<Profile />} />
+                    <Route path='settings' element={<Settings />} />
                 </Route>
             </Routes>
             <PWABadge />

@@ -1,7 +1,7 @@
-import { AuthClientStore } from "@/clientAPI/Token";
-import { ApiMethod } from "@/types/api";
-import { User } from "@/types/user";
-import { useApi } from "@/hooks/UseApi";
+import { AuthClientStore } from '@/clientAPI/Token';
+import { ApiMethod } from '@/types/api';
+import { User } from '@/types/user';
+import { useApi } from '@/hooks/UseApi';
 
 let debouncedPromise: Promise<unknown> | null = null;
 let debouncedResolve: (...args: unknown[]) => void;
@@ -14,10 +14,10 @@ export const useAuthApi = () => {
     const login = async (email: string, password: string) => {
         const response = await sendRequest(
             ApiMethod.POST,
-            "/auth/login",
+            '/auth/login',
             { email, password },
             undefined,
-            { credentials: "include" }
+            { credentials: 'include' }
         );
 
         AuthClientStore.setAccessToken(response.token);
@@ -25,9 +25,20 @@ export const useAuthApi = () => {
     };
 
     const logout = async () => {
-        await sendProtectedRequest(ApiMethod.GET, "/auth/logout", undefined, { credentials: "include" });
+        await sendProtectedRequest(ApiMethod.GET, '/auth/logout', undefined, {
+            credentials: 'include',
+        });
 
         AuthClientStore.removeAccessToken();
+    };
+
+    const signUp = async (email: string, password: string) => {
+        await sendRequest(
+            ApiMethod.POST,
+            '/auth/register',
+            { email, password },
+            undefined
+        );
     };
 
     const refreshTokens = async () => {
@@ -43,10 +54,10 @@ export const useAuthApi = () => {
             const executeLogic = async () => {
                 const response = await sendRequest(
                     ApiMethod.GET,
-                    "/auth/refresh-tokens",
+                    '/auth/refresh-tokens',
                     undefined,
                     undefined,
-                    { credentials: "include" } // Required update
+                    { credentials: 'include' } // Required update
                 );
 
                 AuthClientStore.setAccessToken(response.token);
@@ -85,12 +96,12 @@ export const useAuthApi = () => {
     };
 
     const currentUser = async (userIsNotAuthenticatedCallback: () => void) => {
-        return await sendAuthGuardedRequest(
+        return (await sendAuthGuardedRequest(
             userIsNotAuthenticatedCallback,
             ApiMethod.GET,
-            "/auth/currentUser"
-        ) as Promise<User>;
+            '/auth/currentUser'
+        )) as Promise<User>;
     };
 
-    return { login, logout, currentUser, sendAuthGuardedRequest };
+    return { login, logout, currentUser, sendAuthGuardedRequest, signUp };
 };

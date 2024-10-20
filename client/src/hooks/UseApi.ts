@@ -1,5 +1,5 @@
-import { AuthClientStore } from "@/clientAPI/Token";
-import { ApiMethod } from "@/types/api";
+import { AuthClientStore } from '@/clientAPI/Token';
+import { ApiMethod } from '@/types/api';
 
 const apiUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -15,7 +15,7 @@ const sendRequest = (
         ...(body && { body: JSON.stringify(body) }),
         ...init,
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             ...(authToken && { Authorization: `Bearer ${authToken}` }),
             ...init?.headers,
         },
@@ -23,15 +23,20 @@ const sendRequest = (
         if (response.status >= 400) {
             throw response;
         }
-        
+
         return response.json();
     });
 };
 
-const sendProtectedRequest = (method: ApiMethod, path: string, body?: any, init?: RequestInit) => {
+const sendProtectedRequest = (
+    method: ApiMethod,
+    path: string,
+    body?: any,
+    init?: RequestInit
+) => {
     const authToken = AuthClientStore.getAccessToken();
     if (!authToken) {
-        throw new Error("No auth token found");
+        throw new Error('No auth token found');
     }
 
     return sendRequest(method, path, body, authToken, init);

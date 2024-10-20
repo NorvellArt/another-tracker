@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { device } from "@/types/device";
+import styled from 'styled-components';
+import { device } from '@/types/device';
 
 const Container = styled.div`
     height: 100vh;

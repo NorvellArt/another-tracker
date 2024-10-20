@@ -9,8 +9,8 @@ import Input from '@/components/sharedComponents/Inputs/Input';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const Login: React.FC = () => {
-    const { login } = React.useContext(AuthContext);
+const SignUp: React.FC = () => {
+    const { signUp } = React.useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -23,8 +23,8 @@ const Login: React.FC = () => {
         setPassword(event.currentTarget.value);
     };
 
-    const onLoginClick = async () => {
-        await login(email, password);
+    const onSignUpClick = async () => {
+        await signUp(email, password);
     };
 
     return (
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
                 />
 
                 <ButtonsContainer>
-                    <Button onClick={onLoginClick}>{'Login'}</Button>
+                    <Button onClick={onSignUpClick}>{'Sign Up'}</Button>
                     <Button onClick={() => navigate('/')} color='secondary'>
                         {'Back'}
                     </Button>
@@ -62,4 +62,4 @@ const ButtonsContainer = styled.div`
     gap: 16px;
 `;
 
-export default Login;
+export default SignUp;

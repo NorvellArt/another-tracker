@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Card = styled.div`
     width: 310px;
@@ -6,7 +6,7 @@ const Card = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 26px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     border-radius: 16px;
 `;

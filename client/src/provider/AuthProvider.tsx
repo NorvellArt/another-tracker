@@ -1,14 +1,15 @@
-import React, { ReactNode, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { ReactNode, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useAuthApi } from "@/hooks/UseAuthApi";
-import { ApiMethod } from "@/types/api";
-import { User } from "@/types/user";
+import { useAuthApi } from '@/hooks/UseAuthApi';
+import { ApiMethod } from '@/types/api';
+import { User } from '@/types/user';
 
 type ContextType = {
     isAuthenticated: boolean;
     login(email: string, password: string): Promise<any>;
     logout(): void;
+    signUp(email: string, password: string): Promise<any>;
     currentUser(): Promise<User>;
     sendAuthGuardedRequest(
         method: ApiMethod,
@@ -29,12 +30,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         logout: authLogout,
         currentUser: authCurrentUser,
         sendAuthGuardedRequest: authSendAuthGuardedRequest,
+        signUp: authSignUp,
     } = useAuthApi();
 
     const login = async (email: string, password: string) => {
         try {
             await authLogin(email, password);
-            
+
             setIsAuthenticated(true);
             navigate('/');
         } catch (e) {
@@ -46,6 +48,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const logout = async () => {
         await authLogout();
         setIsAuthenticated(false);
+    };
+
+    const signUp = async (email: string, password: string) => {
+        try {
+            await authSignUp(email, password);
+            navigate('/login');
+        } catch (e: any) {
+            console.log(e);
+        }
     };
 
     const currentUser = async () => {
@@ -75,7 +86,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <AuthContext.Provider
-            value={{ isAuthenticated, login, logout, currentUser, sendAuthGuardedRequest }}>
+            value={{
+                isAuthenticated,
+                login,
+                logout,
+                currentUser,
+                sendAuthGuardedRequest,
+                signUp,
+            }}>
             {children}
         </AuthContext.Provider>
     );
