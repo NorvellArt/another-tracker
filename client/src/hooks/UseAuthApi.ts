@@ -11,7 +11,7 @@ let timeout: number;
 export const useAuthApi = () => {
     const { sendRequest, sendProtectedRequest } = useApi();
 
-    const login = async (email: string, password: string) => {
+    const login = async (email: string, password: string): Promise<User> => {
         const response = await sendRequest(
             ApiMethod.POST,
             '/auth/login',
@@ -95,7 +95,7 @@ export const useAuthApi = () => {
         }
     };
 
-    const currentUser = async (userIsNotAuthenticatedCallback: () => void) => {
+    const getCurrentUser = async (userIsNotAuthenticatedCallback: () => void) => {
         return (await sendAuthGuardedRequest(
             userIsNotAuthenticatedCallback,
             ApiMethod.GET,
@@ -103,5 +103,5 @@ export const useAuthApi = () => {
         )) as Promise<User>;
     };
 
-    return { login, logout, currentUser, sendAuthGuardedRequest, signUp };
+    return { login, logout, getCurrentUser, sendAuthGuardedRequest, signUp };
 };

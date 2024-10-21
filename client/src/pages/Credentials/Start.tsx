@@ -1,4 +1,4 @@
-import LayoutContainer from '@/components/LayoutContainer';
+import LayoutContainer from '@/components/sharedComponents/Containers/PublicContainer';
 import Button from '@/components/sharedComponents/Buttons/Button';
 import CredentialsForm from '@/components/sharedComponents/CredentialsForm';
 import { useNavigate } from 'react-router-dom';

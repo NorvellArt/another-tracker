@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CredentialsForm from '@/components/sharedComponents/CredentialsForm';
-import LayoutContainer from '@/components/LayoutContainer';
+import LayoutContainer from '@/components/sharedComponents/Containers/PublicContainer';
 import Button from '@/components/sharedComponents/Buttons/Button';
 import { Title } from '@/pages/Credentials/components/Title';
 

@@ -1,7 +1,8 @@
 import { AuthClientStore } from '@/clientAPI/Token';
 import { ApiMethod } from '@/types/api';
 
-const apiUrl = import.meta.env.VITE_BACKEND_URL;
+const LOCALHOST = 'http://localhost:80/api'
+const apiUrl = import.meta.env.VITE_BACKEND_URL || LOCALHOST;
 
 const sendRequest = (
     method: ApiMethod,

@@ -7,14 +7,14 @@ import Start from '@/pages/Credentials/Start';
 import PublicLayout from '@/layout/PublicLayout.tsx';
 import ProtectedLayout from '@/layout/ProtectedLayout.tsx';
 import Profile from '@/pages/Profile.tsx';
-import Settings from '@/pages/Settings.tsx';
-import SignUp from './pages/Credentials/SignUp';
+import Projects from '@/pages/Projects.tsx';
+import SignUp from '@/pages/Credentials/SignUp';
 
 function App() {
-    const { currentUser } = React.useContext(AuthContext);
+    const { getCurrentUser } = React.useContext(AuthContext);
 
     useEffect(() => {
-        currentUser().catch(() => {});
+        getCurrentUser().catch(() => {});
     }, []);
 
     return (
@@ -26,9 +26,9 @@ function App() {
                     <Route path='/signup' element={<SignUp />} />
                 </Route>
 
-                <Route path='/dashboard' element={<ProtectedLayout />}>
+                <Route path='/app' element={<ProtectedLayout />}>
                     <Route path='profile' element={<Profile />} />
-                    <Route path='settings' element={<Settings />} />
+                    <Route path='projects' element={<Projects />} />
                 </Route>
             </Routes>
             <PWABadge />
